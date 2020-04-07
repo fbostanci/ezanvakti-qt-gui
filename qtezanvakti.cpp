@@ -56,7 +56,6 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     zamanlayici->setSingleShot(false);
     connect(zamanlayici, SIGNAL(timeout()), this, SLOT(slot_zamanlayici()));
     zamanlayici->start();
-
 }
 
 QtEzanvakti::~QtEzanvakti()
@@ -74,6 +73,7 @@ void QtEzanvakti::ZamaniGuncelle()
     ui->label_st->setText(tarihStr);
     ui->label_ss->setText(saatStr);
 }
+
 void QtEzanvakti::createActions()
 {
     gizle = new QAction(QString("Gizle"), this);
@@ -165,7 +165,7 @@ void QtEzanvakti::slot_zamanlayici()
     QString  ikindi, aksam, yatsi;
     QString kv_gunes, kv_ogle, kv_aksam;
 
-    QTime simdikiSaatS =QTime::currentTime();
+    QTime simdikiSaatS = QTime::currentTime();
     QString simdikiSaat = simdikiSaatS.toString("hh:mm");
     QString simdikiSaatY = simdikiSaatS.toString("hh:mm:ss");
 
@@ -179,6 +179,10 @@ void QtEzanvakti::slot_zamanlayici()
     kv_ogle = vakitler.at(7);
     kv_aksam = vakitler.at(8);
 
+    if (simdikiSaatY == "00:0:00") {
+        qDebug() << "vakitler güncelleniyor";
+        vakitleriYaz();
+    }
 
     if (simdikiSaat < sabah )
     {
@@ -190,6 +194,8 @@ void QtEzanvakti::slot_zamanlayici()
     } else if (simdikiSaat >= sabah && simdikiSaat < gunes) {
         ui->label_mv->setText("Şimdi Kerahat Vakti 1");
         ui->label_mv->setStyleSheet("color: red;");
+        ui->label_k1->setStyleSheet("color: red;");
+        ui->label_kv1->setStyleSheet("color: red;");
 
     } else if (simdikiSaat == gunes) {
         ui->label_mv->setText("Güneş Doğuş Vakti");
@@ -240,10 +246,5 @@ void QtEzanvakti::slot_zamanlayici()
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_y->setStyleSheet("color: green;");
         ui->label_yv->setStyleSheet("color: green;");
-
-    } else if (simdikiSaatY == "00:00:00") {
-        qDebug() << "vakitler güncelleniyor";
-        vakitleriAl();
-
     }
 }
