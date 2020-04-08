@@ -33,18 +33,30 @@
 #include <QTime>
 #include <QDebug>
 #include <QRegularExpression>
+#include <QThread>
 
 QtEzanvakti::QtEzanvakti(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::QtEzanvakti)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Ezanvakti Qt Arayüzü");
+    this->setFixedWidth(552);
+    this->setFixedHeight(352);
+
     QPixmap pm(":/images/ezanvakti96.png");
     ui->label_ezv->setPixmap(pm);
     ui->label_ezv->setScaledContents(true);
+    ui->tabWidget->setCurrentIndex(0);
+    //iptal düğmeleri etkisiz
+    ui->pushButton_ki->setEnabled(false);
+    ui->pushButton_ei->setEnabled(false);
+
 
     createActions();
     createTrayIcon();
+    oynatici = new QMediaPlayer(this);
+    oynatici->setVolume(100);
     bir_saniye = new QTimer(this);
     connect(bir_saniye, SIGNAL(timeout()), this, SLOT(ZamaniGuncelle()));
     bir_saniye->start(1000);
@@ -61,6 +73,9 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
 QtEzanvakti::~QtEzanvakti()
 {
     delete ui;
+    delete oynatici;
+    delete bir_saniye;
+    delete zamanlayici;
 }
 
 void QtEzanvakti::ZamaniGuncelle()
@@ -159,6 +174,149 @@ void QtEzanvakti::konumuYaz()
     ui->label_il->setText(konum.at(1));
 }
 
+void QtEzanvakti::bildirimGonder(QString bildirim)
+{
+    QString komut;
+    if(bildirim == "ayet") {
+        komut="ezanvakti --ayet -b";
+    } else if (bildirim == "hadis") {
+        komut="ezanvakti --hadis -b";
+    } else if (bildirim == "bilgi") {
+        komut="ezanvakti --bilgi -b";
+    } else if (bildirim == "vakit") {
+        komut="ezanvakti -vtb";
+    } else if (bildirim == "iftar") {
+        komut="ezanvakti --iftar -b";
+    } else if(bildirim == "kerahat") {
+        komut="ezanvakti -vkb";
+    }
+
+    QProcess bash;
+    bash.start("bash", QStringList()<<"-c"<<komut);
+    bash.waitForFinished();
+}
+
+void QtEzanvakti::on_pushButton_ba_clicked()
+{
+    bildirimGonder("ayet");
+}
+void QtEzanvakti::on_pushButton_bh_clicked()
+{
+    bildirimGonder("hadis");
+}
+void QtEzanvakti::on_pushButton_bb_clicked()
+{
+    bildirimGonder("bilgi");
+}
+void QtEzanvakti::on_pushButton_sv_clicked()
+{
+    bildirimGonder("vakit");
+}
+void QtEzanvakti::on_pushButton_ik_clicked()
+{
+    bildirimGonder("iftar");
+}
+void QtEzanvakti::on_pushButton_kv_clicked()
+{
+    bildirimGonder("kerahat");
+}
+
+void QtEzanvakti::on_pushButton_ki_clicked()
+{
+    oynatici->stop();
+    ui->pushButton_ki->setEnabled(false);
+    ui->pushButton_kd->setEnabled(true);
+    ui->pushButton_ed->setEnabled(true);
+    ui->pushButton_ei->setEnabled(false);
+}
+
+void QtEzanvakti::on_pushButton_ei_clicked()
+{
+    oynatici->stop();
+    ui->pushButton_ki->setEnabled(false);
+    ui->pushButton_kd->setEnabled(true);
+    ui->pushButton_ed->setEnabled(true);
+    ui->pushButton_ei->setEnabled(false);
+}
+
+void QtEzanvakti::on_pushButton_kd_clicked()
+{
+    ui->pushButton_ki->setEnabled(true);
+    ui->pushButton_kd->setEnabled(false);
+    ui->pushButton_ed->setEnabled(false);
+    ui->pushButton_ei->setEnabled(false);
+
+    QString sureG, okuyucu;
+    sureG = ui->comboBox_su->currentText();
+    QStringList sure = sureG.split(QRegularExpression("\\-"));
+    okuyucu = ui->comboBox_ok->currentText();
+    QString dinlet = tr("http://www.listen2quran.com/listen/%1/%2.mp3").arg(okuyucu).arg(sure.at(0));
+
+    oynatici->setMedia(QUrl(dinlet));
+    oynatici->play();
+}
+
+void QtEzanvakti::on_pushButton_ed_clicked()
+{
+    ui->pushButton_ki->setEnabled(false);
+    ui->pushButton_kd->setEnabled(false);
+    ui->pushButton_ed->setEnabled(false);
+    ui->pushButton_ei->setEnabled(true);
+
+    QProcess bash;
+    bash.start("bash", QStringList()<<"-c"<<"ezanvakti --qt e");
+    bash.waitForFinished();
+
+    QString ezanA = bash.readAllStandardOutput();
+    ezanA = ezanA.trimmed();
+    QStringList ezan = ezanA.split(QRegularExpression("\\+"));
+
+    QString istenen = ui->comboBox_ez->currentText();
+    if (istenen == "Sabah")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(0)));
+    else if (istenen == "Öğle")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(1)));
+    else if (istenen == "İkindi")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(2)));
+    else if (istenen =="Akşam")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(3)));
+    else if (istenen == "Yatsı")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(4)));
+    else if (istenen == "Ezan Duası")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(5)));
+    else if (istenen == "Cuma Selası")
+        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(6)));
+
+    oynatici->play();
+}
+
+void QtEzanvakti::renkleriSifirla() {
+  ui->label_mv->setStyleSheet("");
+  ui->label_s->setStyleSheet("");
+  ui->label_sv->setStyleSheet("");
+  ui->label_g->setStyleSheet("");
+  ui->label_gv->setStyleSheet("");
+  ui->label_o->setStyleSheet("");
+  ui->label_ov->setStyleSheet("");
+  ui->label_i->setStyleSheet("");
+  ui->label_iv->setStyleSheet("");
+  ui->label_a->setStyleSheet("");
+  ui->label_av->setStyleSheet("");
+  ui->label_y->setStyleSheet("");
+  ui->label_yv->setStyleSheet("");
+
+  ui->label_k1->setStyleSheet("");
+  ui->label_kv1->setStyleSheet("");
+  ui->label_k2->setStyleSheet("");
+  ui->label_kv2->setStyleSheet("");
+  ui->label_k3->setStyleSheet("");
+  ui->label_kv3->setStyleSheet("");
+  ui->label_k4->setStyleSheet("");
+  ui->label_kv4->setStyleSheet("");
+  ui->label_k5->setStyleSheet("");
+  ui->label_kv5->setStyleSheet("");
+}
+
 void QtEzanvakti::slot_zamanlayici()
 {
     QString sabah, gunes,ogle;
@@ -186,62 +344,77 @@ void QtEzanvakti::slot_zamanlayici()
 
     if (simdikiSaat < sabah )
     {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Yatsı Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_y->setStyleSheet("color: green;");
         ui->label_yv->setStyleSheet("color: green;");
 
     } else if (simdikiSaat >= sabah && simdikiSaat < gunes) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 1");
+        ui->label_s->setStyleSheet("color: green;");
+        ui->label_sv->setStyleSheet("color: green;");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k1->setStyleSheet("color: red;");
         ui->label_kv1->setStyleSheet("color: red;");
 
     } else if (simdikiSaat == gunes) {
+        renkleriSifirla();
         ui->label_mv->setText("Güneş Doğuş Vakti");
         ui->label_g->setStyleSheet("color: green;");
         ui->label_gv->setStyleSheet("color: green;");
 
     } else if (simdikiSaat > gunes && simdikiSaat <= kv_gunes) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 2");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k2->setStyleSheet("color: red;");
         ui->label_kv2->setStyleSheet("color: red;");
 
     } else if (simdikiSaat > kv_gunes && simdikiSaat < kv_ogle) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kuşluk Vakti");
 
     } else if (simdikiSaat < ogle && simdikiSaat >= kv_ogle) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 3");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k3->setStyleSheet("color: red;");
         ui->label_kv3->setStyleSheet("color: red;");
 
     } else if (simdikiSaat >= ogle && simdikiSaat < ikindi) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Öğle Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_o->setStyleSheet("color: green;");
         ui->label_ov->setStyleSheet("color: green;");
 
     } else if (simdikiSaat >=ikindi && simdikiSaat < kv_aksam) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 4");
         ui->label_mv->setStyleSheet("color: red;");
+        ui->label_i->setStyleSheet("color: green;");
+        ui->label_iv->setStyleSheet("color: green;");
         ui->label_k4->setStyleSheet("color: red;");
         ui->label_kv4->setStyleSheet("color: red;");
 
     } else if (simdikiSaat < aksam && simdikiSaat >= kv_aksam) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 5");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k5->setStyleSheet("color: red;");
         ui->label_kv5->setStyleSheet("color: red;");
 
     } else if (simdikiSaat >= aksam && simdikiSaat < yatsi) {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Akşam Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_a->setStyleSheet("color: green;");
         ui->label_av->setStyleSheet("color: green;");
 
     } else if (simdikiSaat < "24:00") {
+        renkleriSifirla();
         ui->label_mv->setText("Şimdi Yatsı Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_y->setStyleSheet("color: green;");

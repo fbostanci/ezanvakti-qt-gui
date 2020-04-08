@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>552</width>
     <height>352</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_v">
      <attribute name="title">
@@ -487,15 +487,883 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_g">
-     <attribute name="title">
-      <string>Günlük</string>
-     </attribute>
-    </widget>
     <widget class="QWidget" name="tab_d">
      <attribute name="title">
-      <string>Dinle</string>
+      <string>Diğer</string>
      </attribute>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>201</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Bildirimler</string>
+      </property>
+      <widget class="QPushButton" name="pushButton_ba">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>141</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bir Ayet</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_sv">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>150</y>
+         <width>141</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sıradaki vakit</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_bb">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>110</y>
+         <width>141</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bir Bilgi</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_bh">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>70</y>
+         <width>141</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bir Hadis</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_kv">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>230</y>
+         <width>141</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Kerahat vakitleri</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_ik">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>190</y>
+         <width>141</width>
+         <height>34</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>İftar kalan</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>0</y>
+        <width>311</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Kuran</string>
+      </property>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>37</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Okuyucu:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_ok">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>30</y>
+         <width>181</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>AlGhamdi</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AlAjmy</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AsShatree</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>77</y>
+         <width>51</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sure:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_su">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>70</y>
+         <width>211</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>001-Fatiha</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>002-Bakara</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>003-Al-i İmran</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>004-Nisa</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>005-Maide</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>006-Enam</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>007-Araf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>008-Enfal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>009-Tevbe</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>010-Yunus</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>011-Hud</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>012-Yusuf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>013-Rad</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>014-İbrahim</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>015-Hicr</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>016-Nahl</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>017-İsra</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>018-Kehf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>019-Meryem</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>020-Taha</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>021-Enbiya</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>022-Hac</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>023-Müminun</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>024-Nur</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>025-Furkan</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>026-Şuara</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>027-Neml</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>028-Kasas</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>029-Ankebut</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>030-Rum</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>031-Lokman</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>032-Secde</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>033-Ahzab</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>034-Sebe</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>035-Fatır</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>036-Yasin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>037-Saffat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>038-Sad</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>039-Zümer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>040-Mümin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>041-Füssilet</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>042-Şura</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>043-Zuhruf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>044-Duhan</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>045-Casiye</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>046-Akaf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>047-Muhammed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>048-Fetih</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>049-Hucurat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>050-Kaf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>051-Zariyat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>052-Tur</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>053-Necm</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>054-Kamer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>055-Rahman</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>056-Vakia</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>057-Hadid</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>058-Mücadele</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>059-Haşr</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>060-Mümtehine</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>061-Saf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>062-Cuma</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>063-Münafikun</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>064-Tegabun</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>065-Talak</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>066-Tahrim</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>067-Mülk</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>068-Kalem</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>069-Hakka</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>070-Mearic</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>071-Nuh</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>072-Cin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>073-Müzemmil</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>074-Müddessir</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>075-Kıyame</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>076-İnsan</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>077-Mürselat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>078-Nebe</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>079-Naziat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>080-Abese</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>081-Tekvir</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>082-İnfitar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>083-Mutaffifın</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>084-İnşikak</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>085-Büruc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>086-Tarık</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>087-Ala</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>088-Gaşiye</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>089-Fecr</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>090-Beled</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>091-Şems</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>092-Leyl</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>093-Duha</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>094-İnşirah</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>095-Tin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>096-Alak</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>097-Kadir</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>098-Beyyine</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>099-Zilzal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>100-Adiyat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>101-Karia</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>102-Tekasür</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>103-Asr</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>104-Hümeze</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>105-Fil</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>106-Kureyş</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>107-Maun</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>108-Kevser</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>109-Kafirun</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>110-Nasr</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>111-Tebbet</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>112-İhlas</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>113-Felak</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>114-Nas</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="pushButton_kd">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>113</y>
+         <width>88</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Dinlet</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_ki">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>110</y>
+         <width>88</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>İptal</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>160</y>
+        <width>311</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Ezanlar</string>
+      </property>
+      <widget class="QComboBox" name="comboBox_ez">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>20</y>
+         <width>211</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Sabah</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Öğle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>İkindi</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Akşam</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Yatsı</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ezan Duası</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Cuma Selası</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>30</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ezan:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_ed">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>60</y>
+         <width>88</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Dinlet</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_ei">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>60</y>
+         <width>88</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>İptal</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="frame">

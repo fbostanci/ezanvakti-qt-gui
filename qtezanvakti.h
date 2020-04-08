@@ -5,6 +5,8 @@
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QMenu>
+#include <QMultimedia>
+#include <QMediaPlayer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QtEzanvakti; }
@@ -22,16 +24,31 @@ private slots:
     void slot_zamanlayici();
     void ZamaniGuncelle();
     void createActions();
+    void on_pushButton_ba_clicked();
+    void on_pushButton_bh_clicked();
+    void on_pushButton_bb_clicked();
+    void on_pushButton_sv_clicked();
+    void on_pushButton_ik_clicked();
+    void on_pushButton_kv_clicked();
+    void on_pushButton_ed_clicked();
+    void on_pushButton_kd_clicked();
+    void on_pushButton_ki_clicked();
+    void on_pushButton_ei_clicked();
+
     
 private:
     Ui::QtEzanvakti *ui;
     QTimer *zamanlayici;
     QTimer *bir_saniye;
+    QMediaPlayer *oynatici;
+
     QStringList vakitler;
     void createTrayIcon();
     void vakitleriAl();
     void vakitleriYaz();
     void konumuYaz();
+    void renkleriSifirla();
+    void bildirimGonder(QString bildirim);
     
     QAction *gizle;
     QAction *goster;
