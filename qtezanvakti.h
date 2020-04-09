@@ -21,7 +21,6 @@ public:
 
 private slots:
     void slot_zamanlayici();
-    void ZamaniGuncelle();
     void createActions();
     void durumDegisti(QMediaPlayer::State state);
     void on_pushButton_ba_clicked();
@@ -39,13 +38,21 @@ private slots:
 private:
     Ui::QtEzanvakti *ui;
     QTimer *zamanlayici;
-    QTimer *bir_saniye;
     QMediaPlayer *oynatici;
 
     QStringList vakitler;
+    void baslat();
     void createTrayIcon();
+    void zamaniGuncelle();
+    void birSaniyedeGuncelle();
+    void birDakikadaGuncelle();
+    void birSaatteGuncelle();
+    void birGundeGuncelle();
+    void ilkGuncelleme();
+
     void vakitleriAl();
     void vakitleriYaz();
+    void vakitleriSec();
     void konumuYaz();
     void renkleriSifirla();
     void bildirimGonder(QString bildirim);

@@ -51,36 +51,31 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     ui->pushButton_ki->setEnabled(false);
     ui->pushButton_ei->setEnabled(false);
 
-
-    createActions();
-    createTrayIcon();
+    zamanlayici = new QTimer(this);
+    zamanlayici->setInterval(10);
+    zamanlayici->setTimerType(Qt::PreciseTimer);
+    zamanlayici->setSingleShot(false);
+    connect(zamanlayici, SIGNAL(timeout()), this, SLOT(slot_zamanlayici()));
+    zamanlayici->start();
 
     oynatici = new QMediaPlayer(this);
     connect(oynatici, SIGNAL(stateChanged( QMediaPlayer::State )), this, SLOT(durumDegisti(QMediaPlayer::State)));
     oynatici->setVolume(100);
 
-    bir_saniye = new QTimer(this);
-    connect(bir_saniye, SIGNAL(timeout()), this, SLOT(ZamaniGuncelle()));
-    bir_saniye->start(1000);
-    vakitleriYaz();
-    konumuYaz();
-
-    zamanlayici = new QTimer(this);
-    zamanlayici->setInterval(1000);
-    zamanlayici->setSingleShot(false);
-    connect(zamanlayici, SIGNAL(timeout()), this, SLOT(slot_zamanlayici()));
-    zamanlayici->start();
+    createActions();
+    createTrayIcon();
+    ilkGuncelleme();
 }
 
 QtEzanvakti::~QtEzanvakti()
 {
     delete ui;
     delete oynatici;
-    delete bir_saniye;
     delete zamanlayici;
+    delete trayIcon;
 }
 
-void QtEzanvakti::ZamaniGuncelle()
+void QtEzanvakti::zamaniGuncelle()
 {
     QDate tarih = QDate::currentDate();
     QTime saat = QTime::currentTime();
@@ -120,6 +115,7 @@ void QtEzanvakti::createTrayIcon()
 
 void QtEzanvakti::vakitleriAl()
 {
+    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "vakitler güncelleniyor";
     QProcess bash;
     bash.start("bash", QStringList()<<"-c"<<"ezanvakti --qt v");
     bash.waitForFinished();
@@ -139,7 +135,6 @@ void QtEzanvakti::vakitleriAl()
 
 void QtEzanvakti::vakitleriYaz()
 {
-    vakitleriAl();
     ui->label_sv->setText(vakitler.at(0));
     ui->label_gv->setText(vakitler.at(1));
     ui->label_ov->setText(vakitler.at(2));
@@ -330,15 +325,15 @@ void QtEzanvakti::renkleriSifirla() {
   ui->label_kv5->setStyleSheet("");
 }
 
-void QtEzanvakti::slot_zamanlayici()
+void QtEzanvakti::vakitleriSec()
 {
+    QTime simdikiSaatS = QTime::currentTime();
+    QString simdikiSaat = simdikiSaatS.toString("hh:mm");
+
+    renkleriSifirla();
     QString sabah, gunes,ogle;
     QString  ikindi, aksam, yatsi;
     QString kv_gunes, kv_ogle, kv_aksam;
-
-    QTime simdikiSaatS = QTime::currentTime();
-    QString simdikiSaat = simdikiSaatS.toString("hh:mm");
-    QString simdikiSaatY = simdikiSaatS.toString("hh:mm:ss");
 
     sabah = vakitler.at(0);
     gunes = vakitler.at(1);
@@ -350,21 +345,14 @@ void QtEzanvakti::slot_zamanlayici()
     kv_ogle = vakitler.at(7);
     kv_aksam = vakitler.at(8);
 
-    if (simdikiSaatY == "00:00:00") {
-        qDebug() << "vakitler güncelleniyor";
-        vakitleriYaz();
-    }
-
     if (simdikiSaat < sabah )
     {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Yatsı Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_y->setStyleSheet("color: green;");
         ui->label_yv->setStyleSheet("color: green;");
 
     } else if (simdikiSaat >= sabah && simdikiSaat < gunes) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 1");
         ui->label_s->setStyleSheet("color: green;");
         ui->label_sv->setStyleSheet("color: green;");
@@ -373,38 +361,32 @@ void QtEzanvakti::slot_zamanlayici()
         ui->label_kv1->setStyleSheet("color: red;");
 
     } else if (simdikiSaat == gunes) {
-        renkleriSifirla();
         ui->label_mv->setText("Güneş Doğuş Vakti");
         ui->label_g->setStyleSheet("color: green;");
         ui->label_gv->setStyleSheet("color: green;");
 
     } else if (simdikiSaat > gunes && simdikiSaat <= kv_gunes) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 2");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k2->setStyleSheet("color: red;");
         ui->label_kv2->setStyleSheet("color: red;");
 
     } else if (simdikiSaat > kv_gunes && simdikiSaat < kv_ogle) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kuşluk Vakti");
 
     } else if (simdikiSaat < ogle && simdikiSaat >= kv_ogle) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 3");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k3->setStyleSheet("color: red;");
         ui->label_kv3->setStyleSheet("color: red;");
 
     } else if (simdikiSaat >= ogle && simdikiSaat < ikindi) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Öğle Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_o->setStyleSheet("color: green;");
         ui->label_ov->setStyleSheet("color: green;");
 
     } else if (simdikiSaat >=ikindi && simdikiSaat < kv_aksam) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 4");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_i->setStyleSheet("color: green;");
@@ -413,24 +395,76 @@ void QtEzanvakti::slot_zamanlayici()
         ui->label_kv4->setStyleSheet("color: red;");
 
     } else if (simdikiSaat < aksam && simdikiSaat >= kv_aksam) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Kerahat Vakti 5");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k5->setStyleSheet("color: red;");
         ui->label_kv5->setStyleSheet("color: red;");
 
     } else if (simdikiSaat >= aksam && simdikiSaat < yatsi) {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Akşam Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_a->setStyleSheet("color: green;");
         ui->label_av->setStyleSheet("color: green;");
 
     } else if (simdikiSaat < "24:00") {
-        renkleriSifirla();
         ui->label_mv->setText("Şimdi Yatsı Vakti");
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_y->setStyleSheet("color: green;");
         ui->label_yv->setStyleSheet("color: green;");
+    }
+}
+
+void QtEzanvakti::birSaniyedeGuncelle()
+{
+    zamaniGuncelle();
+}
+
+void QtEzanvakti::birDakikadaGuncelle()
+{
+    vakitleriYaz();
+    vakitleriSec();
+    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "1dklık fonksiyon";
+}
+
+void QtEzanvakti::birGundeGuncelle()
+{
+    vakitleriAl();
+    vakitleriYaz();
+    vakitleriSec();
+    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "1günlük fonksiyon";
+}
+
+void QtEzanvakti::birSaatteGuncelle()
+{
+    // vakilerin güncellenmesine karşı
+    // her saat yine vakitleri alsın.
+    birGundeGuncelle();
+    konumuYaz();
+    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "1 saatlik fonksiyon";
+}
+
+void QtEzanvakti::ilkGuncelleme()
+{
+    birSaniyedeGuncelle();
+    konumuYaz();
+    vakitleriAl();
+    birDakikadaGuncelle();
+    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "ben ilk güncellemeyim";
+}
+
+void QtEzanvakti::slot_zamanlayici()
+{
+    int simdikiySaniye = (int)QTime::currentTime().msecsSinceStartOfDay()/100;
+    if (simdikiySaniye%10 == 0) {
+        birSaniyedeGuncelle();
+        if (simdikiySaniye%600 == 0) {
+            birDakikadaGuncelle();
+            if (simdikiySaniye%36000 == 0) {
+                birSaatteGuncelle();
+                if(simdikiySaniye == 0) {
+                    birGundeGuncelle();
+                }
+            }
+        }
     }
 }
