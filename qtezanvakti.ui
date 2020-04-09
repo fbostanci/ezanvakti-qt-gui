@@ -1322,10 +1322,10 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>30</y>
-         <width>51</width>
-         <height>16</height>
+         <x>10</x>
+         <y>20</y>
+         <width>71</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="font">

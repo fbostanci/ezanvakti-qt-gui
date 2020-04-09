@@ -5,7 +5,6 @@
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QMenu>
-#include <QMultimedia>
 #include <QMediaPlayer>
 
 QT_BEGIN_NAMESPACE
@@ -24,6 +23,7 @@ private slots:
     void slot_zamanlayici();
     void ZamaniGuncelle();
     void createActions();
+    void durumDegisti(QMediaPlayer::State state);
     void on_pushButton_ba_clicked();
     void on_pushButton_bh_clicked();
     void on_pushButton_bb_clicked();

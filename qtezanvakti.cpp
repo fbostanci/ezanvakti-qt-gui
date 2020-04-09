@@ -33,7 +33,6 @@
 #include <QTime>
 #include <QDebug>
 #include <QRegularExpression>
-#include <QThread>
 
 QtEzanvakti::QtEzanvakti(QWidget *parent)
     : QMainWindow(parent)
@@ -55,8 +54,12 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
 
     createActions();
     createTrayIcon();
+
     oynatici = new QMediaPlayer(this);
+    connect(oynatici, SIGNAL(stateChanged( QMediaPlayer::State )), this, SLOT(durumDegisti(QMediaPlayer::State)));
     oynatici->setVolume(100);
+
+
     bir_saniye = new QTimer(this);
     connect(bir_saniye, SIGNAL(timeout()), this, SLOT(ZamaniGuncelle()));
     bir_saniye->start(1000);
@@ -177,19 +180,18 @@ void QtEzanvakti::konumuYaz()
 void QtEzanvakti::bildirimGonder(QString bildirim)
 {
     QString komut;
-    if(bildirim == "ayet") {
+    if(bildirim == "ayet")
         komut="ezanvakti --ayet -b";
-    } else if (bildirim == "hadis") {
+    else if (bildirim == "hadis")
         komut="ezanvakti --hadis -b";
-    } else if (bildirim == "bilgi") {
+    else if (bildirim == "bilgi")
         komut="ezanvakti --bilgi -b";
-    } else if (bildirim == "vakit") {
+    else if (bildirim == "vakit")
         komut="ezanvakti -vtb";
-    } else if (bildirim == "iftar") {
+    else if (bildirim == "iftar")
         komut="ezanvakti --iftar -b";
-    } else if(bildirim == "kerahat") {
+     else if(bildirim == "kerahat")
         komut="ezanvakti -vkb";
-    }
 
     QProcess bash;
     bash.start("bash", QStringList()<<"-c"<<komut);
@@ -254,6 +256,7 @@ void QtEzanvakti::on_pushButton_kd_clicked()
 
     oynatici->setMedia(QUrl(dinlet));
     oynatici->play();
+
 }
 
 void QtEzanvakti::on_pushButton_ed_clicked()
@@ -288,6 +291,17 @@ void QtEzanvakti::on_pushButton_ed_clicked()
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(6)));
 
     oynatici->play();
+}
+
+void QtEzanvakti::durumDegisti(QMediaPlayer::State)
+{
+    if(oynatici->state() == QMediaPlayer::StoppedState)
+    {
+        ui->pushButton_ki->setEnabled(false);
+        ui->pushButton_kd->setEnabled(true);
+        ui->pushButton_ed->setEnabled(true);
+        ui->pushButton_ei->setEnabled(false);
+    }
 }
 
 void QtEzanvakti::renkleriSifirla() {
