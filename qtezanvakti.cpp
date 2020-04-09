@@ -59,7 +59,6 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     connect(oynatici, SIGNAL(stateChanged( QMediaPlayer::State )), this, SLOT(durumDegisti(QMediaPlayer::State)));
     oynatici->setVolume(100);
 
-
     bir_saniye = new QTimer(this);
     connect(bir_saniye, SIGNAL(timeout()), this, SLOT(ZamaniGuncelle()));
     bir_saniye->start(1000);
@@ -351,7 +350,7 @@ void QtEzanvakti::slot_zamanlayici()
     kv_ogle = vakitler.at(7);
     kv_aksam = vakitler.at(8);
 
-    if (simdikiSaatY == "00:0:00") {
+    if (simdikiSaatY == "00:00:00") {
         qDebug() << "vakitler güncelleniyor";
         vakitleriYaz();
     }
