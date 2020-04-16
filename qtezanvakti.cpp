@@ -32,6 +32,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QDebug>
+#include <QCloseEvent>
 #include <QRegularExpression>
 
 QtEzanvakti::QtEzanvakti(QWidget *parent)
@@ -115,6 +116,15 @@ void QtEzanvakti::createTrayIcon()
     QString ileti = "Sistem tepsisinde başlatıldı";
     trayIcon->show();
     trayIcon->showMessage("Ezanvakti-qt", ileti, QSystemTrayIcon::Information, 1000);
+}
+
+void QtEzanvakti::closeEvent(QCloseEvent *event)
+{
+    if (trayIcon->isVisible())
+    {
+        this->hide();
+        event->ignore();
+    }
 }
 
 void QtEzanvakti::ezvDenetle()

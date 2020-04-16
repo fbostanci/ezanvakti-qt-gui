@@ -19,6 +19,9 @@ public:
     QtEzanvakti(QWidget *parent = nullptr);
     ~QtEzanvakti();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void slot_zamanlayici();
     void createActions();

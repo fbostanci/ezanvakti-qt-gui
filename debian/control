@@ -1,0 +1,13 @@
+Source: ezanvakti-qt-gui
+Section: misc
+Priority: optional
+Maintainer: Fatih Bostanci <faopera@gmail.com>
+Build-Depends: debhelper (>= 12~), qtbase5-dev, qtbase5-dev-tools, qt5-qmake, qtmultimedia5-dev
+Standards-Version: 4.3.0
+Homepage: https://gitlab.com/fbostanci/ezanvakti-qt-gui
+
+Package: ezanvakti-qt-gui
+Architecture: any
+Depends: ezanvakti (>=7.0), libqt5gui5, libqt5widgets5,libqt5multimedia5-plugins, libqt5core5a, libqt5multimediagsttools5, ${misc:Depends}, ${shlibs:Depends}
+Description: ezanvakti-qt-gui
+ Ezanvakti uygulamasi icin Qt arayuz destegi sunar.
