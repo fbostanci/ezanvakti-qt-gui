@@ -248,11 +248,7 @@ void QtEzanvakti::on_pushButton_kv_clicked()
 
 void QtEzanvakti::on_pushButton_ki_clicked()
 {
-    oynatici->stop();
-    ui->pushButton_ki->setEnabled(false);
-    ui->pushButton_kd->setEnabled(true);
-    ui->pushButton_ed->setEnabled(true);
-    ui->pushButton_ei->setEnabled(false);
+    on_pushButton_ei_clicked();
 }
 
 void QtEzanvakti::on_pushButton_ei_clicked()
@@ -459,9 +455,8 @@ void QtEzanvakti::vakitleriSec()
         ui->label_mv->setStyleSheet("color: green;");
         ui->label_y->setStyleSheet("color: green;");
         ui->label_yv->setStyleSheet("color: green;");
-        ui->label_4->setText("");
         svakit_adi = "Yeni";
-        svakit = "24:00";
+        svakit = "24:00"; //asla kullanilmayacak.
     }
 }
 

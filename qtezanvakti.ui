@@ -27,7 +27,7 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_v">
      <attribute name="title">
@@ -272,8 +272,8 @@
        <rect>
         <x>180</x>
         <y>0</y>
-        <width>336</width>
-        <height>61</height>
+        <width>337</width>
+        <height>63</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -491,8 +491,8 @@
        <rect>
         <x>0</x>
         <y>200</y>
-        <width>516</width>
-        <height>71</height>
+        <width>517</width>
+        <height>73</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -1370,7 +1370,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>20</y>
+         <y>30</y>
          <width>211</width>
          <height>32</height>
         </rect>
@@ -1415,7 +1415,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>20</y>
+         <y>30</y>
          <width>71</width>
          <height>21</height>
         </rect>
@@ -1433,7 +1433,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>60</y>
+         <y>70</y>
          <width>88</width>
          <height>31</height>
         </rect>
@@ -1446,7 +1446,7 @@
        <property name="geometry">
         <rect>
          <x>200</x>
-         <y>60</y>
+         <y>70</y>
          <width>88</width>
          <height>31</height>
         </rect>
