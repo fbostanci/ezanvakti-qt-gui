@@ -44,8 +44,10 @@ private:
     void baslat();
     void createTrayIcon();
     void zamaniGuncelle();
+    void siradakiVakitGoster();
     void birSaniyedeGuncelle();
     void birDakikadaGuncelle();
+    void ezvDenetle();
     void birSaatteGuncelle();
     void birGundeGuncelle();
     void ilkGuncelleme();
@@ -60,6 +62,7 @@ private:
     QAction *gizle;
     QAction *goster;
     QAction *cikis;
+    QString svakit, svakit_adi;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
 };
