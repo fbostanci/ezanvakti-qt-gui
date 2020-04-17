@@ -7,7 +7,7 @@ Exec=/usr/bin/ezanvakti-qt-gui
 Icon=ezanvakti
 Terminal=false
 Categories=Application;Utility;
-Actions=EzvGv1;EzvGv2;EzvGv3;EzvGv4;EzvGv5;EzvGv6;EzvGv7;EzvGv8;EzvGv9;EzvGv10;EzvGv11;
+Actions=EzvGv1;EzvGv2;EzvGv3;EzvGv4;EzvGv5;EzvGv6;
 
 [Desktop Action EzvGv1]
 Name=Günlük Vakitler
@@ -15,52 +15,26 @@ Exec=/usr/bin/ezanvakti --eylem vakitler
 Icon=ezanvakti
 
 [Desktop Action EzvGv2]
-Name=Haftalık Vakitler
-Exec=/usr/bin/ezanvakti --eylem v7
-Icon=ezanvakti
-
-[Desktop Action EzvGv3]
-Name=Aylık Vakitler
-Exec=/usr/bin/ezanvakti --eylem v30
-Icon=ezanvakti
-
-[Desktop Action EzvGv4]
 Name=Kerahat Vakitleri
 Exec=/usr/bin/ezanvakti --eylem kerahat
 Icon=ezanvakti
 
-[Desktop Action EzvGv5]
-Name=Kuran Dinle
-Exec=/usr/bin/ezanvakti --eylem kuran
-Icon=ezanvakti
-
-[Desktop Action EzvGv6]
-Name=Dini Günler ve Geceler
-Exec=/usr/bin/ezanvakti --eylem gunler
-Icon=ezanvakti
-
-[Desktop Action EzvGv7]
-Name=Günlük Ayet
-Exec=/usr/bin/ezanvakti --eylem ayet
-Icon=ezanvakti
-
-[Desktop Action EzvGv8]
-Name=40 Hadis
-Exec=/usr/bin/ezanvakti --eylem hadis
-Icon=ezanvakti
-
-[Desktop Action EzvGv9]
-Name=Esma-ül Hüsna
-Exec=/usr/bin/ezanvakti --eylem esma
-Icon=ezanvakti
-
-[Desktop Action EzvGv10]
-Name=Dini Bilgi
-Exec=/usr/bin/ezanvakti --eylem bilgi
-Icon=ezanvakti
-
-[Desktop Action EzvGv11]
+[Desktop Action EzvGv3]
 Name=Ayarlar
 Exec=/usr/bin/ezanvakti --eylem yapilandirma
 Icon=ezanvakti
 
+[Desktop Action EzvGv4]
+Name=Dini Günler ve Geceler
+Exec=/usr/bin/ezanvakti --eylem gunler
+Icon=ezanvakti
+
+[Desktop Action EzvGv5]
+Name=Haftalık Vakitler
+Exec=/usr/bin/ezanvakti --eylem v7
+Icon=ezanvakti
+
+[Desktop Action EzvGv6]
+Name=Aylık Vakitler
+Exec=/usr/bin/ezanvakti --eylem v30
+Icon=ezanvakti
