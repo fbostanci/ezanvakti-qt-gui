@@ -2,6 +2,7 @@
 #define QTEZANVAKTI_H
 
 #include <QMainWindow>
+#include <QProcess>
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QMenu>
@@ -42,8 +43,17 @@ private:
     Ui::QtEzanvakti *ui;
     QTimer *zamanlayici;
     QMediaPlayer *oynatici;
+    QProcess *bash;
+
+    QAction *gizle;
+    QAction *goster;
+    QAction *cikis;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
 
     QStringList vakitler;
+    QString svakit, svakit_adi;
+
     void baslat();
     void createTrayIcon();
     void zamaniGuncelle();
@@ -61,12 +71,5 @@ private:
     void konumuYaz();
     void renkleriSifirla();
     void bildirimGonder(QString bildirim);
-    
-    QAction *gizle;
-    QAction *goster;
-    QAction *cikis;
-    QString svakit, svakit_adi;
-    QSystemTrayIcon *trayIcon;
-    QMenu *trayIconMenu;
 };
 #endif // QTEZANVAKTI_H

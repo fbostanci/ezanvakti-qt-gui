@@ -26,7 +26,7 @@
 #include "qtezanvakti.h"
 #include "ui_qtezanvakti.h"
 
-#include <QProcess>
+
 #include <QPixmap>
 #include <QDate>
 #include <QTimer>
@@ -63,6 +63,8 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     connect(oynatici, SIGNAL(stateChanged( QMediaPlayer::State )), this, SLOT(durumDegisti(QMediaPlayer::State)));
     oynatici->setVolume(100);
 
+    bash = new QProcess(this);
+
     ezvDenetle();
     createActions();
     createTrayIcon();
@@ -74,6 +76,7 @@ QtEzanvakti::~QtEzanvakti()
     delete ui;
     delete oynatici;
     delete zamanlayici;
+    delete bash;
     delete trayIcon;
     delete gizle;
     delete goster;
@@ -129,10 +132,9 @@ void QtEzanvakti::closeEvent(QCloseEvent *event)
 
 void QtEzanvakti::ezvDenetle()
 {
-    QProcess bash;
-    bash.start("bash", QStringList()<<"-c"<<"[[ -x $(which ezanvakti) ]] && { echo var ; }");
-    bash.waitForFinished();
-    QString output = bash.readAllStandardOutput();
+    bash->start("bash", QStringList()<<"-c"<<"[[ -x $(which ezanvakti) ]] && { echo var ; }");
+    bash->waitForFinished();
+    QString output = bash->readAllStandardOutput();
     output = output.trimmed();
 
     if ( output != "var")
@@ -145,10 +147,10 @@ void QtEzanvakti::ezvDenetle()
 void QtEzanvakti::vakitleriAl()
 {
     qDebug() << QTime::currentTime().toString("hh:mm:ss") << "vakitler güncelleniyor";
-    QProcess bash;
-    bash.start("bash", QStringList()<<"-c"<<"ezanvakti --qt v");
-    bash.waitForFinished();
-    QString output = bash.readAllStandardOutput();
+    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt v");
+    bash->waitForFinished();
+
+    QString output = bash->readAllStandardOutput();
     output = output.trimmed();
     vakitler = output.split(QRegularExpression("\\s+"));
     //sabah vakitler.at(0)
@@ -188,11 +190,10 @@ void QtEzanvakti::vakitleriYaz()
 
 void QtEzanvakti::konumuYaz()
 {
-    QProcess bash;
-    bash.start("bash", QStringList()<<"-c"<<"ezanvakti --qt k");
-    bash.waitForFinished();
+    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt k");
+    bash->waitForFinished();
 
-    QString output = bash.readAllStandardOutput();
+    QString output = bash->readAllStandardOutput();
     output = output.trimmed();
     QStringList konum = output.split(QRegularExpression("\\+"));
 
@@ -216,9 +217,8 @@ void QtEzanvakti::bildirimGonder(QString bildirim)
      else if(bildirim == "kerahat")
         komut="ezanvakti -vkb";
 
-    QProcess bash;
-    bash.start("bash", QStringList()<<"-c"<<komut);
-    bash.waitForFinished();
+    bash->start("bash", QStringList()<<"-c"<<komut);
+    bash->waitForFinished();
 }
 
 void QtEzanvakti::on_pushButton_ba_clicked()
@@ -284,11 +284,10 @@ void QtEzanvakti::on_pushButton_ed_clicked()
     ui->pushButton_ed->setEnabled(false);
     ui->pushButton_ei->setEnabled(true);
 
-    QProcess bash;
-    bash.start("bash", QStringList()<<"-c"<<"ezanvakti --qt e");
-    bash.waitForFinished();
+    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt e");
+    bash->waitForFinished();
 
-    QString ezanA = bash.readAllStandardOutput();
+    QString ezanA = bash->readAllStandardOutput();
     ezanA = ezanA.trimmed();
     QStringList ezan = ezanA.split(QRegularExpression("\\+"));
 
