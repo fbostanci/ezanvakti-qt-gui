@@ -3,8 +3,8 @@
 //                 "Ezanvakti için Qt arayüz uygulaması"                    *
 //              Copyright(C) 2020, FB <ironic{at}yaani.com>                 *
 //             https://gitlab.com/fbostanci/ezanvakti-qt-gui                *
-//                          Ezanvakti-qt-gui                                *
-//                              GPL v3                                      *
+//                      Ezanvakti-qt-gui v1.0                               *
+//                            GPLv3                                         *
 //                                                                          *
 //--------------------------------------------------------------------------+
 //                                                                          *
@@ -41,11 +41,13 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Ezanvakti Qt Arayüzü");
+    this->setWindowIcon(QIcon::fromTheme("ezanvakti"));
     this->setFixedWidth(552);
     this->setFixedHeight(352);
 
     QPixmap pm(":/images/ezanvakti96.png");
     ui->label_ezv->setPixmap(pm);
+
     ui->label_ezv->setScaledContents(true);
     ui->tabWidget->setCurrentIndex(0);
     //iptal düğmeleri etkisiz
@@ -114,8 +116,7 @@ void QtEzanvakti::createTrayIcon()
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
-    QIcon icon(":/images/ezanvakti96.png");
-    trayIcon->setIcon(icon);
+    trayIcon->setIcon(QIcon::fromTheme("ezanvakti"));
     trayIcon->setToolTip("Ezanvakti-qt");
     QString ileti = "Sistem tepsisinde başlatıldı";
     trayIcon->show();
@@ -138,7 +139,7 @@ void QtEzanvakti::ezvDenetle()
     QString output = bash->readAllStandardOutput();
     output = output.trimmed();
 
-    if ( output != "var")
+    if (QString::compare(output,"var") != 0)
     {
         qDebug() << "ezanvakti bulunamadı.";
         exit(1);
@@ -205,17 +206,17 @@ void QtEzanvakti::konumuYaz()
 void QtEzanvakti::bildirimGonder(QString bildirim)
 {
     QString komut;
-    if(bildirim == "ayet")
+    if(QString::compare(bildirim,"ayet") == 0)
         komut="ezanvakti --ayet -b";
-    else if (bildirim == "hadis")
+    else if (QString::compare(bildirim,"hadis") == 0)
         komut="ezanvakti --hadis -b";
-    else if (bildirim == "bilgi")
+    else if (QString::compare(bildirim,"bilgi") == 0)
         komut="ezanvakti --bilgi -b";
-    else if (bildirim == "vakit")
+    else if (QString::compare(bildirim,"vakit") == 0)
         komut="ezanvakti -vtb";
-    else if (bildirim == "iftar")
+    else if (QString::compare(bildirim,"iftar") == 0)
         komut="ezanvakti --iftar -b";
-     else if(bildirim == "kerahat")
+     else if(QString::compare(bildirim,"kerahat") == 0)
         komut="ezanvakti -vkb";
 
     bash->start("bash", QStringList()<<"-c"<<komut);
@@ -293,19 +294,25 @@ void QtEzanvakti::on_pushButton_ed_clicked()
     QStringList ezan = ezanA.split(QRegularExpression("\\+"));
 
     QString istenen = ui->comboBox_ez->currentText();
-    if (istenen == "Sabah")
+    if (QString::compare(istenen,"Sabah") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(0)));
-    else if (istenen == "Öğle")
+
+    else if (QString::compare(istenen,"Öğle") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(1)));
-    else if (istenen == "İkindi")
+
+    else if (QString::compare(istenen,"İkindi") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(2)));
-    else if (istenen =="Akşam")
+
+    else if (QString::compare(istenen,"Akşam") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(3)));
-    else if (istenen == "Yatsı")
+
+    else if (QString::compare(istenen,"Yatsı") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(4)));
-    else if (istenen == "Ezan Duası")
+
+    else if (QString::compare(istenen,"Ezan Duası") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(5)));
-    else if (istenen == "Cuma Selası")
+
+    else if (QString::compare(istenen,"Cuma Selası") == 0)
         oynatici->setMedia(QUrl::fromLocalFile(ezan.at(6)));
 
     oynatici->play();
@@ -462,7 +469,7 @@ void QtEzanvakti::vakitleriSec()
 
 void QtEzanvakti::siradakiVakitGoster()
 {
-    if ( svakit_adi == "Yeni"  )
+    if (QString::compare(svakit_adi,"Yeni") == 0)
     {
         ui->label_np->setText("Sabah");
         ui->label_kp->setText("-- : --");
@@ -510,9 +517,9 @@ void QtEzanvakti::birGundeGuncelle()
 
 void QtEzanvakti::ilkGuncelleme()
 {
-    konumuYaz();
     vakitleriAl();
     vakitleriYaz();
+    konumuYaz();
     birDakikadaGuncelle();
     //qDebug() << QTime::currentTime().toString("hh:mm:ss") << "ben ilk güncellemeyim";
 }
