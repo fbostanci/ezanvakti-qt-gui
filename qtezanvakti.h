@@ -61,7 +61,6 @@ private:
     void birSaniyedeGuncelle();
     void birDakikadaGuncelle();
     void ezvDenetle();
-    void birSaatteGuncelle();
     void birGundeGuncelle();
     void ilkGuncelleme();
 

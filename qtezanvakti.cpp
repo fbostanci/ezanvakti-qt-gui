@@ -78,6 +78,7 @@ QtEzanvakti::~QtEzanvakti()
     delete zamanlayici;
     delete bash;
     delete trayIcon;
+    delete trayIconMenu;
     delete gizle;
     delete goster;
     delete cikis;
@@ -146,7 +147,7 @@ void QtEzanvakti::ezvDenetle()
 
 void QtEzanvakti::vakitleriAl()
 {
-    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "vakitler güncelleniyor";
+    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "vakitler alınıyor...";
     bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt v");
     bash->waitForFinished();
 
@@ -399,7 +400,7 @@ void QtEzanvakti::vakitleriSec()
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k2->setStyleSheet("color: red;");
         ui->label_kv2->setStyleSheet("color: red;");
-        svakit_adi = "öğle";
+        svakit_adi = "Öğle";
         svakit = ogle;
 
     } else if (simdikiSaat > kv_gunes && simdikiSaat < kv_ogle) {
@@ -465,6 +466,7 @@ void QtEzanvakti::siradakiVakitGoster()
     {
         ui->label_np->setText("Sabah");
         ui->label_kp->setText("-- : --");
+        trayIcon->setToolTip("Sabah vaktine kalan:\n -- : --");
 
     } else {
         ui->label_np->setText(svakit_adi);
@@ -495,7 +497,6 @@ void QtEzanvakti::birSaniyedeGuncelle()
 
 void QtEzanvakti::birDakikadaGuncelle()
 {
-    vakitleriYaz();
     vakitleriSec();
 }
 
@@ -509,9 +510,9 @@ void QtEzanvakti::birGundeGuncelle()
 
 void QtEzanvakti::ilkGuncelleme()
 {
-    birSaniyedeGuncelle();
     konumuYaz();
     vakitleriAl();
+    vakitleriYaz();
     birDakikadaGuncelle();
     //qDebug() << QTime::currentTime().toString("hh:mm:ss") << "ben ilk güncellemeyim";
 }
