@@ -34,6 +34,7 @@
 #include <QDebug>
 #include <QCloseEvent>
 #include <QRegularExpression>
+#include <QStandardPaths>
 
 QtEzanvakti::QtEzanvakti(QWidget *parent)
     : QMainWindow(parent)
@@ -95,6 +96,30 @@ void QtEzanvakti::zamaniGuncelle()
     // arayüz bugünün tarihi
     ui->label_st->setText(tarihStr);
     ui->label_ss->setText(saatStr);
+}
+
+QString QtEzanvakti::ayar_oku(QString ayar)
+{
+    auto homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    QString ayarD = (homePath + "/.config/ezanvakti/ayarlar");
+    QFile inputFile(ayarD);
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&inputFile);
+        while (!in.atEnd())
+        {
+            QString satir = in.readLine();
+            QString tAyar(ayar);
+            int knm = satir.indexOf(tAyar);
+            if (knm >= 0)
+            {
+                QString donus = satir.mid(knm + tAyar.length());
+                return donus.remove("'");
+            }
+        }
+        inputFile.close();
+    }
+    return "null";
 }
 
 void QtEzanvakti::createActions()
@@ -192,15 +217,11 @@ void QtEzanvakti::vakitleriYaz()
 
 void QtEzanvakti::konumuYaz()
 {
-    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt k");
-    bash->waitForFinished();
-
-    QString output = bash->readAllStandardOutput();
-    output = output.trimmed();
-    QStringList konum = output.split(QRegularExpression("\\+"));
-
-    ui->label_ul->setText(konum.at(0));
-    ui->label_il->setText(konum.at(1));
+    QString ulke, ilce;
+    ulke = ayar_oku("ULKE=");
+    ilce = ayar_oku("ILCE=");
+    ui->label_ul->setText(ulke.trimmed());
+    ui->label_il->setText(ilce.trimmed());
 }
 
 void QtEzanvakti::bildirimGonder(QString bildirim)
@@ -286,34 +307,28 @@ void QtEzanvakti::on_pushButton_ed_clicked()
     ui->pushButton_ed->setEnabled(false);
     ui->pushButton_ei->setEnabled(true);
 
-    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt e");
-    bash->waitForFinished();
-
-    QString ezanA = bash->readAllStandardOutput();
-    ezanA = ezanA.trimmed();
-    QStringList ezan = ezanA.split(QRegularExpression("\\+"));
 
     QString istenen = ui->comboBox_ez->currentText();
     if (QString::compare(istenen,"Sabah") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(0)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("SABAH_EZANI=")));
 
     else if (QString::compare(istenen,"Öğle") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(1)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("OGLE_EZANI=")));
 
     else if (QString::compare(istenen,"İkindi") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(2)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("IKINDI_EZANI=")));
 
     else if (QString::compare(istenen,"Akşam") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(3)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("AKSAM_EZANI=")));
 
     else if (QString::compare(istenen,"Yatsı") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(4)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("YATSI_EZANI=")));
 
     else if (QString::compare(istenen,"Ezan Duası") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(5)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("EZAN_DUASI=")));
 
     else if (QString::compare(istenen,"Cuma Selası") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ezan.at(6)));
+        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("CUMA_SELASI=")));
 
     oynatici->play();
 }

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QProcess>
+#include <QFile>
+#include <QTextStream>
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QMenu>
@@ -54,6 +56,7 @@ private:
     QStringList vakitler;
     QString svakit, svakit_adi;
 
+    QString ayar_oku(QString);
     void baslat();
     void createTrayIcon();
     void zamaniGuncelle();
