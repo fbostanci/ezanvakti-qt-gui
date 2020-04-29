@@ -3,7 +3,7 @@
 //                 "Ezanvakti için Qt arayüz uygulaması"                    *
 //              Copyright(C) 2020, FB <ironic{at}yaani.com>                 *
 //             https://gitlab.com/fbostanci/ezanvakti-qt-gui                *
-//                      Ezanvakti-qt-gui v1.0                               *
+//                      Ezanvakti-qt-gui v1.1                               *
 //                            GPLv3                                         *
 //                                                                          *
 //--------------------------------------------------------------------------+
@@ -98,7 +98,7 @@ void QtEzanvakti::zamaniGuncelle()
     ui->label_ss->setText(saatStr);
 }
 
-QString QtEzanvakti::ayar_oku(QString ayar)
+QString QtEzanvakti::ayarOku(QString ayar)
 {
     auto homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     QString ayarD = (homePath + "/.config/ezanvakti/ayarlar");
@@ -171,42 +171,68 @@ void QtEzanvakti::ezvDenetle()
     }
 }
 
+QString QtEzanvakti::kerahatVakit(QString vakit, int kvsure)
+{
+    QTime saatS = QTime::fromString(vakit);
+    saatS = saatS.addSecs(kvsure);
+    QString saat = saatS.toString("hh:mm");
+
+    return saat;
+}
+
 void QtEzanvakti::vakitleriAl()
 {
-    qDebug() << QTime::currentTime().toString("hh:mm:ss") << "vakitler alınıyor...";
-    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt v");
-    bash->waitForFinished();
+   auto homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+   QString ezanveri = (homePath + "/.config/ezanvakti/" + ayarOku("EZANVERI_ADI="));
+   QDate tarih = QDate::currentDate();
+   QString tarihStr = tarih.toString("dd.MM.yyyy");
 
-    QString output = bash->readAllStandardOutput();
-    output = output.trimmed();
-    vakitler = output.split(QRegularExpression("\\s+"));
-    //sabah vakitler.at(0)
-    // güneş vakitler.at(1)
-    // öğle vakitler.at(2)
-    // ikindi vakitler.at(3)
-    // akşam vakitler.at(4)
-    // yatsı vakitler.at(5)
-    // kv_gunes vakitler.at(6)
-    // kv_ogle vakitler.at(7)
-    // kv_aksam vakitler.at(8)
+   QFile inputFile(ezanveri);
+   if (inputFile.open(QIODevice::ReadOnly))
+   {
+      QTextStream in(&inputFile);
+      while (!in.atEnd())
+      {
+         QString line = in.readLine();
+         QString tAyar(tarihStr);
+         int pos = line.indexOf(tAyar);
+         if (pos >= 0)
+         {
+            vakitler = line.split(QRegularExpression("\\s+"));
+            vakitler << kerahatVakit(vakitler.at(2),2700);
+            vakitler << kerahatVakit(vakitler.at(3),-2700);
+            vakitler << kerahatVakit(vakitler.at(5),-2700);
+         }
+      }
+      inputFile.close();
+   }
+   sabah = vakitler.at(1);
+   gunes = vakitler.at(2);
+   ogle = vakitler.at(3);
+   ikindi = vakitler.at(4);
+   aksam = vakitler.at(5);
+   yatsi = vakitler.at(6);
+   kv_gunes = vakitler.at(7);
+   kv_ogle = vakitler.at(8);
+   kv_aksam = vakitler.at(9);
 }
 
 void QtEzanvakti::vakitleriYaz()
 {
-    ui->label_sv->setText(vakitler.at(0));
-    ui->label_gv->setText(vakitler.at(1));
-    ui->label_ov->setText(vakitler.at(2));
-    ui->label_iv->setText(vakitler.at(3));
-    ui->label_av->setText(vakitler.at(4));
-    ui->label_yv->setText(vakitler.at(5));
+    ui->label_sv->setText(vakitler.at(1));
+    ui->label_gv->setText(vakitler.at(2));
+    ui->label_ov->setText(vakitler.at(3));
+    ui->label_iv->setText(vakitler.at(4));
+    ui->label_av->setText(vakitler.at(5));
+    ui->label_yv->setText(vakitler.at(6));
     QString kerahat1, kerahat2, kerahat3;
     QString kerahat4, kerahat5;
 
-    kerahat1 =tr("%1 ~ %2 arası").arg(vakitler.at(0)).arg(vakitler.at(1));
-    kerahat2 =tr("%1 ~ %2 arası").arg(vakitler.at(1)).arg(vakitler.at(6));
-    kerahat3 =tr("%1 ~ %2 arası").arg(vakitler.at(7)).arg(vakitler.at(2));
-    kerahat4 =tr("%1 ~ %2 arası").arg(vakitler.at(3)).arg(vakitler.at(8));
-    kerahat5 =tr("%1 ~ %2 arası").arg(vakitler.at(8)).arg(vakitler.at(4));
+    kerahat1 =tr("%1 ~ %2 arası").arg(vakitler.at(1)).arg(vakitler.at(2));
+    kerahat2 =tr("%1 ~ %2 arası").arg(vakitler.at(2)).arg(vakitler.at(7));
+    kerahat3 =tr("%1 ~ %2 arası").arg(vakitler.at(8)).arg(vakitler.at(3));
+    kerahat4 =tr("%1 ~ %2 arası").arg(vakitler.at(4)).arg(vakitler.at(9));
+    kerahat5 =tr("%1 ~ %2 arası").arg(vakitler.at(9)).arg(vakitler.at(5));
 
     ui->label_kv1->setText(kerahat1);
     ui->label_kv2->setText(kerahat2);
@@ -218,10 +244,10 @@ void QtEzanvakti::vakitleriYaz()
 void QtEzanvakti::konumuYaz()
 {
     QString ulke, ilce;
-    ulke = ayar_oku("ULKE=");
-    ilce = ayar_oku("ILCE=");
-    ui->label_ul->setText(ulke.trimmed());
-    ui->label_il->setText(ilce.trimmed());
+    ulke = ayarOku("ULKE=");
+    ilce = ayarOku("ILCE=");
+    ui->label_ul->setText(ulke);
+    ui->label_il->setText(ilce);
 }
 
 void QtEzanvakti::bildirimGonder(QString bildirim)
@@ -310,25 +336,25 @@ void QtEzanvakti::on_pushButton_ed_clicked()
 
     QString istenen = ui->comboBox_ez->currentText();
     if (QString::compare(istenen,"Sabah") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("SABAH_EZANI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("SABAH_EZANI=")));
 
     else if (QString::compare(istenen,"Öğle") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("OGLE_EZANI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("OGLE_EZANI=")));
 
     else if (QString::compare(istenen,"İkindi") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("IKINDI_EZANI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("IKINDI_EZANI=")));
 
     else if (QString::compare(istenen,"Akşam") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("AKSAM_EZANI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("AKSAM_EZANI=")));
 
     else if (QString::compare(istenen,"Yatsı") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("YATSI_EZANI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("YATSI_EZANI=")));
 
     else if (QString::compare(istenen,"Ezan Duası") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("EZAN_DUASI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("EZAN_DUASI=")));
 
     else if (QString::compare(istenen,"Cuma Selası") == 0)
-        oynatici->setMedia(QUrl::fromLocalFile(ayar_oku("CUMA_SELASI=")));
+        oynatici->setMedia(QUrl::fromLocalFile(ayarOku("CUMA_SELASI=")));
 
     oynatici->play();
 }
@@ -377,20 +403,6 @@ void QtEzanvakti::vakitleriSec()
     QString simdikiSaat = simdikiSaatS.toString("hh:mm");
 
     renkleriSifirla();
-    QString sabah, gunes,ogle;
-    QString  ikindi, aksam, yatsi;
-    QString kv_gunes, kv_ogle, kv_aksam;
-
-    sabah = vakitler.at(0);
-    gunes = vakitler.at(1);
-    ogle = vakitler.at(2);
-    ikindi = vakitler.at(3);
-    aksam = vakitler.at(4);
-    yatsi = vakitler.at(5);
-    kv_gunes = vakitler.at(6);
-    kv_ogle = vakitler.at(7);
-    kv_aksam = vakitler.at(8);
-
     if (simdikiSaat < sabah )
     {
         ui->label_mv->setText("Şimdi Yatsı Vakti");

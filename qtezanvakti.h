@@ -28,7 +28,7 @@ protected:
 private slots:
     void slot_zamanlayici();
     void createActions();
-    void durumDegisti(QMediaPlayer::State state);
+    void durumDegisti(QMediaPlayer::State);
     void on_pushButton_ba_clicked();
     void on_pushButton_bh_clicked();
     void on_pushButton_bb_clicked();
@@ -53,10 +53,15 @@ private:
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
 
+    QString kerahatVakit(QString, int);
+
     QStringList vakitler;
     QString svakit, svakit_adi;
+    QString sabah, gunes,ogle;
+    QString  ikindi, aksam, yatsi;
+    QString kv_gunes, kv_ogle, kv_aksam;
 
-    QString ayar_oku(QString);
+    QString ayarOku(QString);
     void baslat();
     void createTrayIcon();
     void zamaniGuncelle();
@@ -72,6 +77,6 @@ private:
     void vakitleriSec();
     void konumuYaz();
     void renkleriSifirla();
-    void bildirimGonder(QString bildirim);
+    void bildirimGonder(QString);
 };
 #endif // QTEZANVAKTI_H
