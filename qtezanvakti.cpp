@@ -41,7 +41,7 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     , ui(new Ui::QtEzanvakti)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Ezanvakti Qt Arayüzü");
+    this->setWindowTitle("Ezanvakti Qt Arayüzü v1.1_0428_01");
     this->setWindowIcon(QIcon::fromTheme("ezanvakti"));
     this->setFixedWidth(552);
     this->setFixedHeight(352);
@@ -64,11 +64,10 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
 
     oynatici = new QMediaPlayer(this);
     connect(oynatici, SIGNAL(stateChanged( QMediaPlayer::State )), this, SLOT(durumDegisti(QMediaPlayer::State)));
-    oynatici->setVolume(100);
+    oynatici->setVolume(ayarOku("SES=").toInt());
 
     bash = new QProcess(this);
 
-    ezvDenetle();
     createActions();
     createTrayIcon();
     ilkGuncelleme();
@@ -219,20 +218,20 @@ void QtEzanvakti::vakitleriAl()
 
 void QtEzanvakti::vakitleriYaz()
 {
-    ui->label_sv->setText(vakitler.at(1));
-    ui->label_gv->setText(vakitler.at(2));
-    ui->label_ov->setText(vakitler.at(3));
-    ui->label_iv->setText(vakitler.at(4));
-    ui->label_av->setText(vakitler.at(5));
-    ui->label_yv->setText(vakitler.at(6));
+    ui->label_sv->setText(sabah);
+    ui->label_gv->setText(gunes);
+    ui->label_ov->setText(ogle);
+    ui->label_iv->setText(ikindi);
+    ui->label_av->setText(aksam);
+    ui->label_yv->setText(yatsi);
     QString kerahat1, kerahat2, kerahat3;
     QString kerahat4, kerahat5;
 
-    kerahat1 =tr("%1 ~ %2 arası").arg(vakitler.at(1)).arg(vakitler.at(2));
-    kerahat2 =tr("%1 ~ %2 arası").arg(vakitler.at(2)).arg(vakitler.at(7));
-    kerahat3 =tr("%1 ~ %2 arası").arg(vakitler.at(8)).arg(vakitler.at(3));
-    kerahat4 =tr("%1 ~ %2 arası").arg(vakitler.at(4)).arg(vakitler.at(9));
-    kerahat5 =tr("%1 ~ %2 arası").arg(vakitler.at(9)).arg(vakitler.at(5));
+    kerahat1 =tr("%1 ~ %2 arası").arg(sabah).arg(gunes);
+    kerahat2 =tr("%1 ~ %2 arası").arg(gunes).arg(kv_gunes);
+    kerahat3 =tr("%1 ~ %2 arası").arg(kv_ogle).arg(ogle);
+    kerahat4 =tr("%1 ~ %2 arası").arg(ikindi).arg(kv_aksam);
+    kerahat5 =tr("%1 ~ %2 arası").arg(kv_aksam).arg(aksam);
 
     ui->label_kv1->setText(kerahat1);
     ui->label_kv2->setText(kerahat2);
@@ -243,11 +242,8 @@ void QtEzanvakti::vakitleriYaz()
 
 void QtEzanvakti::konumuYaz()
 {
-    QString ulke, ilce;
-    ulke = ayarOku("ULKE=");
-    ilce = ayarOku("ILCE=");
-    ui->label_ul->setText(ulke);
-    ui->label_il->setText(ilce);
+    ui->label_ul->setText(ayarOku("ULKE="));
+    ui->label_il->setText(ayarOku("ILCE="));
 }
 
 void QtEzanvakti::bildirimGonder(QString bildirim)
@@ -266,6 +262,7 @@ void QtEzanvakti::bildirimGonder(QString bildirim)
      else if(QString::compare(bildirim,"kerahat") == 0)
         komut="ezanvakti -vkb";
 
+    ezvDenetle();
     bash->start("bash", QStringList()<<"-c"<<komut);
     bash->waitForFinished();
 }
@@ -429,7 +426,7 @@ void QtEzanvakti::vakitleriSec()
         svakit_adi = "Öğle";
         svakit = ogle;
 
-    } else if (simdikiSaat > gunes && simdikiSaat <= kv_gunes) {
+    } else if (simdikiSaat > gunes && simdikiSaat < kv_gunes) {
         ui->label_mv->setText("Şimdi Kerahat Vakti 2");
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k2->setStyleSheet("color: red;");
@@ -437,7 +434,7 @@ void QtEzanvakti::vakitleriSec()
         svakit_adi = "Öğle";
         svakit = ogle;
 
-    } else if (simdikiSaat > kv_gunes && simdikiSaat < kv_ogle) {
+    } else if (simdikiSaat >= kv_gunes && simdikiSaat < kv_ogle) {
         ui->label_mv->setText("Şimdi Kuşluk Vakti");
         svakit_adi = "Öğle";
         svakit = ogle;
