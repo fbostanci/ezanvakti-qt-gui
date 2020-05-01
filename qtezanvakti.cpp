@@ -41,7 +41,7 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     , ui(new Ui::QtEzanvakti)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Ezanvakti Qt Arayüzü v1.1_0428_01");
+    this->setWindowTitle("Ezanvakti Qt Arayüzü v1.1");
     this->setWindowIcon(QIcon::fromTheme("ezanvakti"));
     this->setFixedWidth(552);
     this->setFixedHeight(352);
@@ -68,6 +68,7 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
 
     bash = new QProcess(this);
 
+    ezvDenetle();
     createActions();
     createTrayIcon();
     ilkGuncelleme();
@@ -158,12 +159,12 @@ void QtEzanvakti::closeEvent(QCloseEvent *event)
 
 void QtEzanvakti::ezvDenetle()
 {
-    bash->start("bash", QStringList()<<"-c"<<"[[ -x $(which ezanvakti) ]] && { echo var ; }");
+    bash->start("bash", QStringList()<<"-c"<<"ezanvakti --qt v");
     bash->waitForFinished();
     QString output = bash->readAllStandardOutput();
     output = output.trimmed();
 
-    if (QString::compare(output,"var") != 0)
+    if (QString::compare(output,"") == 0)
     {
         qDebug() << "ezanvakti bulunamadı.";
         exit(1);
@@ -259,10 +260,9 @@ void QtEzanvakti::bildirimGonder(QString bildirim)
         komut="ezanvakti -vtb";
     else if (QString::compare(bildirim,"iftar") == 0)
         komut="ezanvakti --iftar -b";
-     else if(QString::compare(bildirim,"kerahat") == 0)
-        komut="ezanvakti -vkb";
+     else if(QString::compare(bildirim,"imsak") == 0)
+        komut="ezanvakti --imsak -b";
 
-    ezvDenetle();
     bash->start("bash", QStringList()<<"-c"<<komut);
     bash->waitForFinished();
 }
@@ -287,9 +287,9 @@ void QtEzanvakti::on_pushButton_ik_clicked()
 {
     bildirimGonder("iftar");
 }
-void QtEzanvakti::on_pushButton_kv_clicked()
+void QtEzanvakti::on_pushButton_mk_clicked()
 {
-    bildirimGonder("kerahat");
+    bildirimGonder("imsak");
 }
 
 void QtEzanvakti::on_pushButton_ki_clicked()
@@ -533,6 +533,7 @@ void QtEzanvakti::birDakikadaGuncelle()
 
 void QtEzanvakti::birGundeGuncelle()
 {
+    ezvDenetle();
     vakitleriAl();
     vakitleriYaz();
     vakitleriSec();

@@ -647,7 +647,7 @@
         <string>Bir Hadis</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_kv">
+      <widget class="QPushButton" name="pushButton_mk">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -657,7 +657,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Kerahat vakitleri</string>
+        <string>İmsak kalan</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_ik">
