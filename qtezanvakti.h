@@ -46,6 +46,7 @@ private:
     QTimer *zamanlayici;
     QMediaPlayer *oynatici;
     QProcess *bash;
+    QTime *a, *b;
 
     QAction *gizle;
     QAction *goster;

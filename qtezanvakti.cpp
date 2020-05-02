@@ -56,8 +56,8 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     ui->pushButton_ei->setEnabled(false);
 
     zamanlayici = new QTimer(this);
-    zamanlayici->setInterval(10);
-    zamanlayici->setTimerType(Qt::PreciseTimer);
+    zamanlayici->setInterval(1000);
+    // zamanlayici->setTimerType(Qt::PreciseTimer);
     zamanlayici->setSingleShot(false);
     connect(zamanlayici, SIGNAL(timeout()), this, SLOT(slot_zamanlayici()));
     zamanlayici->start();
@@ -67,6 +67,8 @@ QtEzanvakti::QtEzanvakti(QWidget *parent)
     oynatici->setVolume(ayarOku("SES=").toInt());
 
     bash = new QProcess(this);
+    a = new QTime();
+    b = new QTime();
 
     ezvDenetle();
     createActions();
@@ -85,6 +87,8 @@ QtEzanvakti::~QtEzanvakti()
     delete gizle;
     delete goster;
     delete cikis;
+    delete a;
+    delete b;
 }
 
 void QtEzanvakti::zamaniGuncelle()
@@ -182,50 +186,50 @@ QString QtEzanvakti::kerahatVakit(QString vakit, int kvsure)
 
 void QtEzanvakti::vakitleriAl()
 {
-   auto homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-   QString ezanveri = (homePath + "/.config/ezanvakti/" + ayarOku("EZANVERI_ADI="));
-   QDate tarih = QDate::currentDate();
-   QDate ytarih = QDate::currentDate().addDays(1);
+    auto homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    QString ezanveri = (homePath + "/.config/ezanvakti/" + ayarOku("EZANVERI_ADI="));
+    QDate tarih = QDate::currentDate();
+    QDate ytarih = QDate::currentDate().addDays(1);
 
-   QString ytarihStr = ytarih.toString("dd.MM.yyyy");
-   QString tarihStr = tarih.toString("dd.MM.yyyy");
-   int kerahat_suresi = ayarOku("KERAHAT_SURESI=").toInt()* 60;
+    QString ytarihStr = ytarih.toString("dd.MM.yyyy");
+    QString tarihStr = tarih.toString("dd.MM.yyyy");
+    int kerahat_suresi = ayarOku("KERAHAT_SURESI=").toInt()* 60;
 
-   QFile inputFile(ezanveri);
-   if (inputFile.open(QIODevice::ReadOnly))
-   {
-      QTextStream in(&inputFile);
-      while (!in.atEnd())
-      {
-         QString line = in.readLine();
-         QString tAyar(tarihStr), tAyar2(ytarihStr);
-         int pos = line.indexOf(tAyar);
-         int pos2 = line.indexOf(tAyar2);
-         if (pos >= 0)
-         {
-            vakitler = line.split(QRegularExpression("\\s+"));
-            vakitler << kerahatVakit(vakitler.at(2),kerahat_suresi);
-            vakitler << kerahatVakit(vakitler.at(3),-kerahat_suresi);
-            vakitler << kerahatVakit(vakitler.at(5),-kerahat_suresi);
-         }
-         if (pos2 >= 0)
-         {
-            QStringList yvakitler = line.split(QRegularExpression("\\s+"));
-            vakitler << yvakitler.at(1);
-         }
-      }
-      inputFile.close();
-   }
-   sabah = vakitler.at(1);
-   gunes = vakitler.at(2);
-   ogle = vakitler.at(3);
-   ikindi = vakitler.at(4);
-   aksam = vakitler.at(5);
-   yatsi = vakitler.at(6);
-   kv_gunes = vakitler.at(7);
-   kv_ogle = vakitler.at(8);
-   kv_aksam = vakitler.at(9);
-   ysabah = vakitler.at(10);
+    QFile inputFile(ezanveri);
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&inputFile);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            QString tAyar(tarihStr), tAyar2(ytarihStr);
+            int pos = line.indexOf(tAyar);
+            int pos2 = line.indexOf(tAyar2);
+            if (pos >= 0)
+            {
+                vakitler = line.split(QRegularExpression("\\s+"));
+                vakitler << kerahatVakit(vakitler.at(2),kerahat_suresi);
+                vakitler << kerahatVakit(vakitler.at(3),-kerahat_suresi);
+                vakitler << kerahatVakit(vakitler.at(5),-kerahat_suresi);
+            }
+            if (pos2 >= 0)
+            {
+                QStringList yvakitler = line.split(QRegularExpression("\\s+"));
+                vakitler << yvakitler.at(1);
+            }
+        }
+        inputFile.close();
+    }
+    sabah = vakitler.at(1);
+    gunes = vakitler.at(2);
+    ogle = vakitler.at(3);
+    ikindi = vakitler.at(4);
+    aksam = vakitler.at(5);
+    yatsi = vakitler.at(6);
+    kv_gunes = vakitler.at(7);
+    kv_ogle = vakitler.at(8);
+    kv_aksam = vakitler.at(9);
+    ysabah = vakitler.at(10);
 }
 
 void QtEzanvakti::vakitleriYaz()
@@ -271,7 +275,7 @@ void QtEzanvakti::bildirimGonder(QString bildirim)
         komut="ezanvakti -vtb";
     else if (QString::compare(bildirim,"iftar") == 0)
         komut="ezanvakti --iftar -b";
-     else if(QString::compare(bildirim,"imsak") == 0)
+    else if(QString::compare(bildirim,"imsak") == 0)
         komut="ezanvakti --imsak -b";
 
     bash->start("bash", QStringList()<<"-c"<<komut);
@@ -379,30 +383,30 @@ void QtEzanvakti::durumDegisti(QMediaPlayer::State)
 }
 
 void QtEzanvakti::renkleriSifirla() {
-  ui->label_mv->setStyleSheet("");
-  ui->label_s->setStyleSheet("");
-  ui->label_sv->setStyleSheet("");
-  ui->label_g->setStyleSheet("");
-  ui->label_gv->setStyleSheet("");
-  ui->label_o->setStyleSheet("");
-  ui->label_ov->setStyleSheet("");
-  ui->label_i->setStyleSheet("");
-  ui->label_iv->setStyleSheet("");
-  ui->label_a->setStyleSheet("");
-  ui->label_av->setStyleSheet("");
-  ui->label_y->setStyleSheet("");
-  ui->label_yv->setStyleSheet("");
+    ui->label_mv->setStyleSheet("");
+    ui->label_s->setStyleSheet("");
+    ui->label_sv->setStyleSheet("");
+    ui->label_g->setStyleSheet("");
+    ui->label_gv->setStyleSheet("");
+    ui->label_o->setStyleSheet("");
+    ui->label_ov->setStyleSheet("");
+    ui->label_i->setStyleSheet("");
+    ui->label_iv->setStyleSheet("");
+    ui->label_a->setStyleSheet("");
+    ui->label_av->setStyleSheet("");
+    ui->label_y->setStyleSheet("");
+    ui->label_yv->setStyleSheet("");
 
-  ui->label_k1->setStyleSheet("");
-  ui->label_kv1->setStyleSheet("");
-  ui->label_k2->setStyleSheet("");
-  ui->label_kv2->setStyleSheet("");
-  ui->label_k3->setStyleSheet("");
-  ui->label_kv3->setStyleSheet("");
-  ui->label_k4->setStyleSheet("");
-  ui->label_kv4->setStyleSheet("");
-  ui->label_k5->setStyleSheet("");
-  ui->label_kv5->setStyleSheet("");
+    ui->label_k1->setStyleSheet("");
+    ui->label_kv1->setStyleSheet("");
+    ui->label_k2->setStyleSheet("");
+    ui->label_kv2->setStyleSheet("");
+    ui->label_k3->setStyleSheet("");
+    ui->label_kv3->setStyleSheet("");
+    ui->label_k4->setStyleSheet("");
+    ui->label_kv4->setStyleSheet("");
+    ui->label_k5->setStyleSheet("");
+    ui->label_kv5->setStyleSheet("");
 }
 
 void QtEzanvakti::vakitleriSec()
@@ -509,27 +513,18 @@ void QtEzanvakti::siradakiVakitGoster()
         ui->label_np->setText("Sabah (" + ysabah + ")");
         svakit_adi = "(Yarın) Sabah";
 
-        QTime a = QTime::currentTime();
-        QTime b = QTime::fromString(svakit);
-
         QStringList ysabahV = ysabah.split(QRegularExpression("\\:"));
-        hedef_sure = (ysabahV.at(0).toInt() * 3600) + (ysabahV.at(1).toInt() * 60) + (a.secsTo(b) + 1);
+        hedef_sure = (ysabahV.at(0).toInt() * 3600) + (ysabahV.at(1).toInt() * 60) +
+                (a->currentTime().secsTo(b->fromString(svakit)) + 1);
 
     } else {
         ui->label_np->setText(svakit_adi);
-
-        QTime a = QTime::currentTime();
-        QTime b = QTime::fromString(svakit + ":00");
-        hedef_sure = a.secsTo(b);
-     }
-    int saat = hedef_sure / 3600;
-    int dakika = hedef_sure % 3600 / 60;
-    int saniye = hedef_sure % 60;
-
+        hedef_sure = a->currentTime().secsTo(b->fromString(svakit + ":00"));
+    }
     QString gerisayim = QString("%1 saat : %2 dakika : %3 saniye")
-            .arg(saat, 2, 10, QChar('0'))
-            .arg(dakika, 2, 10, QChar('0'))
-            .arg(saniye, 2, 10, QChar('0'));
+            .arg(hedef_sure / 3600,        2, 10, QChar('0'))
+            .arg(hedef_sure % 3600 / 60,   2, 10, QChar('0'))
+            .arg(hedef_sure % 60,          2, 10, QChar('0'));
 
     ui->label_kp->setText(gerisayim);
     trayIcon->setToolTip(svakit_adi + " vaktine kalan:\n" + gerisayim);
@@ -538,8 +533,8 @@ void QtEzanvakti::siradakiVakitGoster()
 
 void QtEzanvakti::birSaniyedeGuncelle()
 {
-    vakitleriSec();
     zamaniGuncelle();
+    vakitleriSec();
     siradakiVakitGoster();
 }
 
@@ -562,11 +557,9 @@ void QtEzanvakti::ilkGuncelleme()
 
 void QtEzanvakti::slot_zamanlayici()
 {
-    int simdikiySaniye = (int)QTime::currentTime().msecsSinceStartOfDay()/100;
-    if (simdikiySaniye%10 == 0) {
-        birSaniyedeGuncelle();
-        if (simdikiySaniye == 0) {
-            birGundeGuncelle();
-        }
+    int simdikiySaniye = (int)QTime::currentTime().msecsSinceStartOfDay()/1000;
+    birSaniyedeGuncelle();
+    if (simdikiySaniye == 0) {
+        birGundeGuncelle();
     }
 }
