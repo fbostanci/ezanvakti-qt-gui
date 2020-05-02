@@ -56,10 +56,11 @@ private:
     QString kerahatVakit(QString, int);
 
     QStringList vakitler;
-    QString svakit, svakit_adi;
+    QString svakit, svakit_adi, ysabah;
     QString sabah, gunes,ogle;
     QString  ikindi, aksam, yatsi;
     QString kv_gunes, kv_ogle, kv_aksam;
+    int hedef_sure;
 
     QString ayarOku(QString);
     void baslat();
@@ -67,7 +68,6 @@ private:
     void zamaniGuncelle();
     void siradakiVakitGoster();
     void birSaniyedeGuncelle();
-    void birDakikadaGuncelle();
     void ezvDenetle();
     void birGundeGuncelle();
     void ilkGuncelleme();

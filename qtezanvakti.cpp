@@ -185,7 +185,11 @@ void QtEzanvakti::vakitleriAl()
    auto homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
    QString ezanveri = (homePath + "/.config/ezanvakti/" + ayarOku("EZANVERI_ADI="));
    QDate tarih = QDate::currentDate();
+   QDate ytarih = QDate::currentDate().addDays(1);
+
+   QString ytarihStr = ytarih.toString("dd.MM.yyyy");
    QString tarihStr = tarih.toString("dd.MM.yyyy");
+   int kerahat_suresi = ayarOku("KERAHAT_SURESI=").toInt()* 60;
 
    QFile inputFile(ezanveri);
    if (inputFile.open(QIODevice::ReadOnly))
@@ -194,14 +198,20 @@ void QtEzanvakti::vakitleriAl()
       while (!in.atEnd())
       {
          QString line = in.readLine();
-         QString tAyar(tarihStr);
+         QString tAyar(tarihStr), tAyar2(ytarihStr);
          int pos = line.indexOf(tAyar);
+         int pos2 = line.indexOf(tAyar2);
          if (pos >= 0)
          {
             vakitler = line.split(QRegularExpression("\\s+"));
-            vakitler << kerahatVakit(vakitler.at(2),2700);
-            vakitler << kerahatVakit(vakitler.at(3),-2700);
-            vakitler << kerahatVakit(vakitler.at(5),-2700);
+            vakitler << kerahatVakit(vakitler.at(2),kerahat_suresi);
+            vakitler << kerahatVakit(vakitler.at(3),-kerahat_suresi);
+            vakitler << kerahatVakit(vakitler.at(5),-kerahat_suresi);
+         }
+         if (pos2 >= 0)
+         {
+            QStringList yvakitler = line.split(QRegularExpression("\\s+"));
+            vakitler << yvakitler.at(1);
          }
       }
       inputFile.close();
@@ -215,6 +225,7 @@ void QtEzanvakti::vakitleriAl()
    kv_gunes = vakitler.at(7);
    kv_ogle = vakitler.at(8);
    kv_aksam = vakitler.at(9);
+   ysabah = vakitler.at(10);
 }
 
 void QtEzanvakti::vakitleriYaz()
@@ -487,7 +498,7 @@ void QtEzanvakti::vakitleriSec()
         ui->label_y->setStyleSheet("color: green;");
         ui->label_yv->setStyleSheet("color: green;");
         svakit_adi = "Yeni";
-        svakit = "24:00"; //asla kullanilmayacak.
+        svakit = "23:59:59";
     }
 }
 
@@ -495,40 +506,41 @@ void QtEzanvakti::siradakiVakitGoster()
 {
     if (QString::compare(svakit_adi,"Yeni") == 0)
     {
-        ui->label_np->setText("Sabah");
-        ui->label_kp->setText("-- : --");
-        trayIcon->setToolTip("Sabah vaktine kalan:\n -- : --");
+        ui->label_np->setText("Sabah (" + ysabah + ")");
+        svakit_adi = "(Yarın) Sabah";
+
+        QTime a = QTime::currentTime();
+        QTime b = QTime::fromString(svakit);
+
+        QStringList ysabahV = ysabah.split(QRegularExpression("\\:"));
+        hedef_sure = (ysabahV.at(0).toInt() * 3600) + (ysabahV.at(1).toInt() * 60) + (a.secsTo(b) + 1);
 
     } else {
         ui->label_np->setText(svakit_adi);
 
         QTime a = QTime::currentTime();
         QTime b = QTime::fromString(svakit + ":00");
-        int hedef_sure = a.secsTo(b);
+        hedef_sure = a.secsTo(b);
+     }
+    int saat = hedef_sure / 3600;
+    int dakika = hedef_sure % 3600 / 60;
+    int saniye = hedef_sure % 60;
 
-        int saat = hedef_sure / 3600;
-        int dakika = hedef_sure % 3600 / 60;
-        int saniye = hedef_sure % 60;
+    QString gerisayim = QString("%1 saat : %2 dakika : %3 saniye")
+            .arg(saat, 2, 10, QChar('0'))
+            .arg(dakika, 2, 10, QChar('0'))
+            .arg(saniye, 2, 10, QChar('0'));
 
-        QString gerisayim = QString("%1 saat : %2 dakika : %3 saniye")
-          .arg(saat, 2, 10, QChar('0'))
-          .arg(dakika, 2, 10, QChar('0'))
-          .arg(saniye, 2, 10, QChar('0'));
+    ui->label_kp->setText(gerisayim);
+    trayIcon->setToolTip(svakit_adi + " vaktine kalan:\n" + gerisayim);
 
-        ui->label_kp->setText(gerisayim);
-        trayIcon->setToolTip(svakit_adi + " vaktine kalan:\n" + gerisayim);
-    }
 }
 
 void QtEzanvakti::birSaniyedeGuncelle()
 {
+    vakitleriSec();
     zamaniGuncelle();
     siradakiVakitGoster();
-}
-
-void QtEzanvakti::birDakikadaGuncelle()
-{
-    vakitleriSec();
 }
 
 void QtEzanvakti::birGundeGuncelle()
@@ -545,7 +557,6 @@ void QtEzanvakti::ilkGuncelleme()
     vakitleriAl();
     vakitleriYaz();
     konumuYaz();
-    birDakikadaGuncelle();
     //qDebug() << QTime::currentTime().toString("hh:mm:ss") << "ben ilk güncellemeyim";
 }
 
@@ -554,11 +565,8 @@ void QtEzanvakti::slot_zamanlayici()
     int simdikiySaniye = (int)QTime::currentTime().msecsSinceStartOfDay()/100;
     if (simdikiySaniye%10 == 0) {
         birSaniyedeGuncelle();
-        if (simdikiySaniye%600 == 0) {
-            birDakikadaGuncelle();
-            if (simdikiySaniye == 0) {
-                birGundeGuncelle();
-            }
+        if (simdikiySaniye == 0) {
+            birGundeGuncelle();
         }
     }
 }
