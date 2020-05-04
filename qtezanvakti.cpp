@@ -243,11 +243,11 @@ void QtEzanvakti::vakitleriYaz()
     QString kerahat1, kerahat2, kerahat3;
     QString kerahat4, kerahat5;
 
-    kerahat1 =tr("%1 ~ %2 arası").arg(sabah).arg(gunes);
-    kerahat2 =tr("%1 ~ %2 arası").arg(gunes).arg(kv_gunes);
-    kerahat3 =tr("%1 ~ %2 arası").arg(kv_ogle).arg(ogle);
-    kerahat4 =tr("%1 ~ %2 arası").arg(ikindi).arg(kv_aksam);
-    kerahat5 =tr("%1 ~ %2 arası").arg(kv_aksam).arg(aksam);
+    kerahat1 =tr("%1 ~ %2").arg(sabah).arg(gunes);
+    kerahat2 =tr("%1 ~ %2").arg(gunes).arg(kv_gunes);
+    kerahat3 =tr("%1 ~ %2").arg(kv_ogle).arg(ogle);
+    kerahat4 =tr("%1 ~ %2").arg(ikindi).arg(kv_aksam);
+    kerahat5 =tr("%1 ~ %2").arg(kv_aksam).arg(aksam);
 
     ui->label_kv1->setText(kerahat1);
     ui->label_kv2->setText(kerahat2);

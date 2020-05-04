@@ -23,11 +23,16 @@
       <height>281</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Sans Serif</family>
+     </font>
+    </property>
     <property name="tabPosition">
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_v">
      <attribute name="title">
@@ -41,6 +46,11 @@
         <width>181</width>
         <height>201</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans Serif</family>
+       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -59,7 +69,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -77,7 +88,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -95,7 +107,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -113,7 +126,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -131,7 +145,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -149,7 +164,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -167,7 +183,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -185,7 +202,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -203,7 +221,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -221,7 +240,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -239,7 +259,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
@@ -257,7 +278,8 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>Sans Serif</family>
+         <pointsize>11</pointsize>
          <weight>50</weight>
          <bold>false</bold>
         </font>
@@ -276,6 +298,11 @@
         <height>63</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Sans Serif</family>
+       </font>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -293,6 +320,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -317,7 +345,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -335,7 +363,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -353,7 +381,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -371,7 +399,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -389,7 +417,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -407,7 +435,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -425,7 +453,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -443,7 +471,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -461,7 +489,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -479,7 +507,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>Sans Serif</family>
        </font>
       </property>
       <property name="text">
@@ -494,6 +522,11 @@
         <width>517</width>
         <height>73</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sans Serif</family>
+       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -512,6 +545,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
         </font>
        </property>
@@ -530,6 +564,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -550,6 +585,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
         </font>
        </property>
@@ -568,6 +604,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -697,6 +734,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
         </font>
        </property>
@@ -740,6 +778,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
         </font>
        </property>
@@ -1422,6 +1461,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Sans Serif</family>
          <pointsize>11</pointsize>
         </font>
        </property>
@@ -1467,6 +1507,11 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Sans Serif</family>
+     </font>
+    </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
     </property>
@@ -1484,6 +1529,7 @@
      </property>
      <property name="font">
       <font>
+       <family>Sans Serif</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1506,6 +1552,7 @@
      </property>
      <property name="font">
       <font>
+       <family>Sans Serif</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1528,6 +1575,7 @@
      </property>
      <property name="font">
       <font>
+       <family>Sans Serif</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1550,6 +1598,7 @@
      </property>
      <property name="font">
       <font>
+       <family>Sans Serif</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1569,6 +1618,11 @@
        <width>41</width>
        <height>41</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Sans Serif</family>
+      </font>
      </property>
      <property name="text">
       <string>TextLabel</string>
