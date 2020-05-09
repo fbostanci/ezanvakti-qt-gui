@@ -431,13 +431,16 @@ void QtEzanvakti::vakitleriSec()
         ui->label_mv->setStyleSheet("color: red;");
         ui->label_k1->setStyleSheet("color: red;");
         ui->label_kv1->setStyleSheet("color: red;");
-        svakit_adi = "Öğle";
-        svakit = ogle;
+        svakit_adi = "Gün Doğumu";
+        svakit = gunes;
 
     } else if (simdikiSaat == gunes) {
         ui->label_mv->setText("Güneş Doğuş Vakti");
-        ui->label_g->setStyleSheet("color: green;");
-        ui->label_gv->setStyleSheet("color: green;");
+        ui->label_mv->setStyleSheet("color: red;");
+        ui->label_g->setStyleSheet("color: red;");
+        ui->label_gv->setStyleSheet("color: red;");
+        ui->label_k2->setStyleSheet("color: red;");
+        ui->label_kv2->setStyleSheet("color: red;");
         svakit_adi = "Öğle";
         svakit = ogle;
 
