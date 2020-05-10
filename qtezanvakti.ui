@@ -23,16 +23,11 @@
       <height>281</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Sans Serif</family>
-     </font>
-    </property>
     <property name="tabPosition">
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_v">
      <attribute name="title">
@@ -46,11 +41,6 @@
         <width>181</width>
         <height>201</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -67,12 +57,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Sabah</string>
        </property>
@@ -85,12 +69,6 @@
          <width>58</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Akşam</string>
@@ -105,12 +83,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>İkindi</string>
        </property>
@@ -123,12 +95,6 @@
          <width>58</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Yatsı</string>
@@ -143,12 +109,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Öğle</string>
        </property>
@@ -161,12 +121,6 @@
          <width>71</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Güneş</string>
@@ -181,12 +135,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -199,12 +147,6 @@
          <width>81</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>TextLabel</string>
@@ -219,12 +161,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -237,12 +173,6 @@
          <width>81</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>TextLabel</string>
@@ -257,12 +187,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -275,14 +199,6 @@
          <width>81</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="text">
         <string>TextLabel</string>
@@ -298,11 +214,6 @@
         <height>63</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -317,14 +228,6 @@
          <width>311</width>
          <height>31</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
        </property>
        <property name="text">
         <string>TextLabel</string>
@@ -343,11 +246,6 @@
         <height>21</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="text">
        <string>Kerahat Vakti 1:</string>
       </property>
@@ -360,11 +258,6 @@
         <width>121</width>
         <height>21</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
       </property>
       <property name="text">
        <string>Kerahat Vakti 3:</string>
@@ -379,11 +272,6 @@
         <height>21</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="text">
        <string>Kerahat Vakti 4:</string>
       </property>
@@ -396,11 +284,6 @@
         <width>121</width>
         <height>21</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
       </property>
       <property name="text">
        <string>Kerahat Vakti 5:</string>
@@ -415,11 +298,6 @@
         <height>21</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="text">
        <string>Kerahat Vakti 2:</string>
       </property>
@@ -432,11 +310,6 @@
         <width>151</width>
         <height>21</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
       </property>
       <property name="text">
        <string>TextLabel</string>
@@ -451,11 +324,6 @@
         <height>21</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="text">
        <string>TextLabel</string>
       </property>
@@ -468,11 +336,6 @@
         <width>151</width>
         <height>21</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
       </property>
       <property name="text">
        <string>TextLabel</string>
@@ -487,11 +350,6 @@
         <height>21</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="text">
        <string>TextLabel</string>
       </property>
@@ -505,11 +363,6 @@
         <height>21</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
-      </property>
       <property name="text">
        <string>TextLabel</string>
       </property>
@@ -522,11 +375,6 @@
         <width>517</width>
         <height>73</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sans Serif</family>
-       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -543,12 +391,6 @@
          <height>18</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Sıradaki Vakit:</string>
        </property>
@@ -561,14 +403,6 @@
          <width>311</width>
          <height>20</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="text">
         <string>TextLabel</string>
@@ -583,12 +417,6 @@
          <height>18</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Kalan Süre:</string>
        </property>
@@ -601,14 +429,6 @@
          <width>311</width>
          <height>20</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="text">
         <string>TextLabel</string>
@@ -732,12 +552,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Okuyucu:</string>
        </property>
@@ -775,12 +589,6 @@
          <width>51</width>
          <height>21</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
        </property>
        <property name="text">
         <string>Sure:</string>
@@ -1459,12 +1267,6 @@
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Ezan:</string>
        </property>
@@ -1507,11 +1309,6 @@
       <height>61</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Sans Serif</family>
-     </font>
-    </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
     </property>
@@ -1526,13 +1323,6 @@
        <width>291</width>
        <height>20</height>
       </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Sans Serif</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -1550,13 +1340,6 @@
        <height>20</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Sans Serif</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
      <property name="text">
       <string>TextLabel</string>
      </property>
@@ -1572,13 +1355,6 @@
        <width>131</width>
        <height>20</height>
       </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Sans Serif</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -1596,13 +1372,6 @@
        <height>20</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Sans Serif</family>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
      <property name="text">
       <string>TextLabel</string>
      </property>
@@ -1618,11 +1387,6 @@
        <width>41</width>
        <height>41</height>
       </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Sans Serif</family>
-      </font>
      </property>
      <property name="text">
       <string>TextLabel</string>
