@@ -1,20 +1,23 @@
 #include "qtezanvakti.h"
-
 #include <QApplication>
 #include <QSharedMemory>
+#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {
-    QSharedMemory _singular("EzanvaktiQtInstance");
-    if(_singular.attach(QSharedMemory::ReadOnly))
-    {
-        _singular.detach();
-        return -42;
-    } else {
-        _singular.create(1);
+    QApplication app(argc, argv);
+
+    // Tekil örnek kontrolü için QSharedMemory kullanımı
+    QSharedMemory sharedMemory("EzanvaktiQtInstance");
+
+    // Paylaşılan bellek oluşturulmaya çalışılıyor
+    if (!sharedMemory.create(1)) {
+        QMessageBox::information(nullptr, "Bilgi", "Uygulamanın başka bir örneği zaten çalışıyor.");
+        return -1;
     }
-    QApplication a(argc, argv);
-    QtEzanvakti w;
-    w.show();
-    return a.exec();
+
+    QtEzanvakti mainWindow;
+    mainWindow.show();
+
+    return app.exec();
 }
